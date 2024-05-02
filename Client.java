@@ -1,8 +1,8 @@
 public class Client {
-    private static int reference;
+    private int reference;
 
     public void setReference(int reference) {
-        Client.reference = reference;
+        this.reference = reference;
     }
 
     public int getReference() {
