@@ -1,5 +1,5 @@
 public class Client {
-    private int reference;
+    private static int reference;
 
     public void setReference(int reference) {
         this.reference = reference;
