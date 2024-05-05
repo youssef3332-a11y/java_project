@@ -17,6 +17,7 @@ public class Main {
         System.out.println("2. MENU Clients");
         System.out.println("3. MENU Fournisseurs");
         System.out.println("4. MENU Commande");
+        System.out.println();
 
         Scanner scan = new Scanner(System.in);
         int menuChoix = scan.nextInt();
@@ -30,6 +31,15 @@ public class Main {
                 switch(operationProduit){
                     case 1 :
                         //yt9ra dakchi li kayn f lfichier li stockena fih les produits
+                        System.out.println("Choisir le type des produits à consulter.");
+                        System.out.println("1. Consulter la liste des produits finis");
+                        System.out.println("1. Consulter la liste des produits élémentaires");
+                        System.out.println("3. Consulter la liste de tous les produits");
+                        int typeProduit= scan.nextInt();
+                        switch(typeProduit){
+                            case 1 :
+                                
+                        }
                         //break;
                     case 2 :
                         //bayn
