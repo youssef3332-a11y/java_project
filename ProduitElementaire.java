@@ -1,6 +1,5 @@
 public class ProduitElementaire extends Produit{
     private String categorie;
-
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }

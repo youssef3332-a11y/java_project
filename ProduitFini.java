@@ -1,6 +1,6 @@
 public class ProduitFini extends Produit{
     private int reference;
-
+    private static int count;
     public void setReference(int reference) {
         this.reference = reference;
     }
@@ -10,7 +10,8 @@ public class ProduitFini extends Produit{
 
     public ProduitFini(String nom, double prix, int quantite){
         super(nom,prix,quantite);
-        reference++;
+        count++;
+        this.reference = count;
     }
 
     @Override

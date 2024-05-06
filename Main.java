@@ -14,9 +14,14 @@ public class Main {
         System.out.println("**************************************************");
         System.out.println();
 
-        //le debut du traitement
+        //les listes des produits
         List<ProduitElementaire> ListeProduitElementaire = new ArrayList<>();
         List<ProduitFini> ListeProduitsFini = new ArrayList<>();
+
+        //les listes des clients
+        List<ClientPersonne> ListeClientPersonne = new ArrayList<>();
+        List<ClientSociete> ListeClientSociete = new ArrayList<>();
+
         while (true) {
             System.out.println("Commencez par choisir l'un des menus :");
             System.out.println("1. MENU Produits");
@@ -25,7 +30,6 @@ public class Main {
             System.out.println("4. MENU Commande");
             System.out.println("5. finissez la gestion.");
             System.out.print(">>>");
-
             Scanner scan = new Scanner(System.in);
             int menuChoix = scan.nextInt();
             switch (menuChoix){
@@ -112,28 +116,85 @@ public class Main {
                     }
                     continue;
                 case 2 :
-                    System.out.println("1. Consulter la liste des clients");
-                    System.out.println("2. Ajouter un nouveau client");
-                    System.out.println("3. Supprimer un client");
-                    System.out.println("4. Mettre à jour les détails d'un client");
-                    int operationClient = scan.nextInt();
-                    switch(operationClient){
-                        case 1 :
-                            //yt9ra dakchi li kayn f lfichier li stockena fih les clients
-                            //break;
-                        case 2 :
-                            //bayn hh
-                            //break;
-                        case 3 :
-                            //code
-                            //break;
-                        case 4 :
-                            //code
-                            //break;
-                        default :
-                            System.out.println("Votre choix ne correspond à aucune opération");
-                    }
-                    break;
+                 while (true){
+                     System.out.println("1. Consulter la liste des clients");
+                     System.out.println("2. Ajouter un nouveau client");
+                     System.out.println("3. Supprimer un client");
+                     System.out.println("4. Mettre à jour les détails d'un client");
+                     System.out.println("5. retourner à la page d'accueil");
+                     System.out.print(">>>");
+                     int operationClient = scan.nextInt();
+                     Scanner scan2 = new Scanner(System.in);
+                     int choose;
+                     switch (operationClient) {
+                         case 1:
+                             System.out.println("----->la liste des clients personnes: 1   societes: 2");
+                             choose = scan2.nextInt();
+                             scan2.nextLine();
+                             if (choose == 1) {
+                                 afficherListeClientPersonne(ListeClientPersonne);
+                             }
+                             else if (choose == 2) {
+                                 afficherListeClientSociete(ListeClientSociete);
+                             }
+                             else
+                             {
+                                 System.out.println("option non disponible !");
+                             }
+                             break;
+                         case 2:
+                             System.out.println("l'ajout d'un nouveau client personne: 1   societe: 2");
+                             choose = scan2.nextInt();
+                             scan2.nextLine();
+                             if (choose == 1) {
+                                 addlisteClientPersonne(ListeClientPersonne);
+                             }
+                             else if (choose == 2) {
+                                 addlisteClientSociete(ListeClientSociete);
+                             }
+                             else
+                             {
+                                 System.out.println("option non disponible !");
+                             }
+                             break;
+                         case 3:
+                             System.out.println("supprimer un client  personne: 1   societe: 2:");
+                             choose = scan2.nextInt();
+                             scan2.nextLine();
+                             if (choose == 1) {
+                                 supprimerClientPersonne(ListeClientPersonne);
+                             }
+                             else if (choose == 2) {
+                                 supprimerClientSociete(ListeClientSociete);
+                             }
+                             else
+                             {
+                                 System.out.println("option non disponible !");
+                             }
+                             break;
+                         case 4:
+                             System.out.println("mettre à jour les détails d'un client personne: 1   societe: 2");
+                             choose = scan2.nextInt();
+                             scan2.nextLine();
+                             if (choose == 1) {
+                                 modifierClientPersonne(ListeClientPersonne);
+                             }
+                             else if (choose == 2) {
+                                 modifierClientSociete(ListeClientSociete);
+                             }
+                             else{
+                                 System.out.println("option non disponible !");
+                             }
+                             break;
+                         case 5:
+                             System.out.println("la page d'accueil :");
+                             break;
+                         default:
+                             System.out.println("Votre choix ne correspond à aucune opération");
+                     }
+                     if (operationClient == 5) {break;}
+                 }
+                 continue;
                 case 3 :
                     System.out.println("1. Consulter la liste des fournisseurs");
                     System.out.println("2. Ajouter un nouveau fournisseur");
@@ -192,7 +253,7 @@ public class Main {
             }
         }
     }
-//produit elementaire
+//methodes pour les produits elementaire
     public static int indexProduitElementaire(List<ProduitElementaire> listeProduits, String nom){
         for (int i = 0; i < listeProduits.size(); i++) {
             if (listeProduits.get(i).libelle.equals(nom)) {
@@ -269,7 +330,7 @@ public class Main {
         while (true){
             try {
                 categorie = scan.nextLine();
-                scan.nextLine();
+                //scan.nextLine();
                 break;
             }
             catch (Exception e){
@@ -385,7 +446,7 @@ public class Main {
             }
         }
     }
-//produit fini
+//methodes pour les produits fini
     public static int indexProduitFini(List<ProduitFini> listeProduits, String nom){
         for (int i = 0; i < listeProduits.size(); i++) {
             if (listeProduits.get(i).libelle.equals(nom)) {
@@ -558,5 +619,311 @@ public class Main {
             }
         }
     }
+//methodes pour manupiler les client personne
+    public static int indexClientPersonne(List<ClientPersonne> listeClients, int ref){
+    for (int i = 0; i < listeClients.size(); i++) {
+        if (listeClients.get(i).getReference() == ref) {
+            return i;
+        }
+    }
+    return -1;
+}
+    public static boolean verifierClientPersonne(List<ClientPersonne> listeClients, int ref){
+    return indexClientPersonne(listeClients, ref) != -1;
+}
+    public static void afficherListeClientPersonne(List<ClientPersonne> listeClients){
+        if (listeClients.isEmpty()){
+            System.out.println("Pas de clients personnes");
+        }
+        else {
+            for (ClientPersonne client : listeClients) {System.out.println(client);// calling the toString methode
+            }
+        }
+    }
+    public static void addlisteClientPersonne(List<ClientPersonne> listeClients){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("donner le nom du client");
+        System.out.print(">>>");
+        String nom;
+        while (true){
+            try{
+                nom = scan.next();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer un nom valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        System.out.println("donner le prenom du client:");
+        System.out.print(">>>");
+        String prenom;
+        while (true){
+            try {
+                prenom = scan.nextLine();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer un prenom valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        System.out.println("donner CIN:");
+        System.out.print(">>>");
+        String cin;
+        while (true){
+            try {
+                cin = scan.nextLine();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer une CIN valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        ClientPersonne client = new ClientPersonne(prenom, nom, cin);
+        listeClients.add(client);
+    }
+    public static void supprimerClientPersonne(List<ClientPersonne> listeClients) {
+        if (listeClients.isEmpty()) {
+            System.out.println("vous n'avait pas de clients personnes  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner la CIN du client:");
+            System.out.print(">>>");
+            String cin;
+            cin = scan2.nextLine();
+            int test = 0;
+            for (int i = 0; i < listeClients.size(); i++) {
+                if (listeClients.get(i).getCin().equals(cin)) {
+                    listeClients.remove(i);
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce client n'existe pas !");
+            }
+        }
+    }
+    public static void modifierClientPersonne(List<ClientPersonne> listeClients){
+        if (listeClients.isEmpty()){
+            System.out.println("Vous n'avez pas de clients");
+        }
+        else {
+            Scanner scan3 = new Scanner(System.in);
+            System.out.println("donner la reference du client à modifier");
+            System.out.print(">>>");
+            int ref = scan3.nextInt();
+            scan3.nextLine();
+            if (!verifierClientPersonne(listeClients, ref)){
+                System.out.println("ce client n'existe pas !");
+            }
+            else {
+                while (true){
+                    System.out.println("------>quelle paramètre vous voulez changer:");
+                    System.out.println("    le nom: 1   le prenom: 2   la cin: 3  finissez la modification: 4");
+                    System.out.print(">>>");
+                    int number = scan3.nextInt();
+                    scan3.nextLine();
+                    int test1 = 0;
+                    switch (number){
+                        case 1:
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setNom(scan3.nextLine());
+                            scan3.nextLine();
+                            System.out.println("le nom a été modifier");
+                            break;
+                        case 2:
+                            String prenom = scan3.nextLine();
+                            while (true){
+                                try{
+                                    prenom = scan3.nextLine();
+                                    scan3.nextLine();
+                                    break;
+                                }
+                                catch (Exception e){
+                                    System.out.println("error: " + e.getMessage());
+                                    System.out.print("veuillez entrer un prenom valide!\n>>>");
+                                    scan3.nextLine();
+                                }
+                            }
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setPrenom(prenom);
+                            System.out.println("le prenom à été modifier");
+                            break;
+                        case 3:
+                            String cin = scan3.nextLine();
+                            while (true){
+                                try{
+                                    cin = scan3.nextLine();
+                                    scan3.nextLine();
+                                    break;
+                                }
+                                catch (Exception e){
+                                    System.out.println("error: " + e.getMessage());
+                                    System.out.print("veuillez entrer une cin valide!\n>>>");
+                                    scan3.nextLine();
+                                }
+                            }
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setCin(cin);
+                            System.out.println("la cin à été modifier");
+                            break;
+                        case 4:
+                            System.out.println("finissez la modification");
+                            test1 = 1;
+                            break;
+                        default:
+                            System.out.println("choisissez une option valide !");
+                            break;
+                    }
+                    if (test1 == 1){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+//methodes pour manupiler les client societe
+    public static int indexClientSociete(List<ClientSociete> listeClients, int ref){
+    for (int i = 0; i < listeClients.size(); i++) {
+        if (listeClients.get(i).getReference() == ref) {
+            return i;
+        }
+    }
+    return -1;
+}
+    public static boolean verifierClientSociete(List<ClientSociete> listeClients, int ref){
+        return indexClientSociete(listeClients, ref) != -1;
+    }
+    public static void afficherListeClientSociete(List<ClientSociete> listeClients){
+        if (listeClients.isEmpty()){
+            System.out.println("Pas de clients Societes");
+        }
+        else {
+            for (ClientSociete client : listeClients) {System.out.println(client);// calling the toString methode
+            }
+        }
+    }
+    public static void addlisteClientSociete(List<ClientSociete> listeClients){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("donner la raison sociale de la societe");
+        System.out.print(">>>");
+        String nom;
+        while (true){
+            try{
+                nom = scan.next();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer une raison sociale valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        System.out.println("donner le domaine d'activite de la societe :");
+        System.out.print(">>>");
+        String da;
+        while (true){
+            try {
+                da = scan.nextLine();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer un domaine valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        ClientSociete client = new ClientSociete(nom,da);
+        listeClients.add(client);
+    }
+    public static void supprimerClientSociete(List<ClientSociete> listeClients) {
+        if (listeClients.isEmpty()) {
+            System.out.println("vous n'avez pas de clients societes  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner la raison sociale du client societe:");
+            System.out.print(">>>");
+            String rs;
+            rs = scan2.nextLine();
+            int test = 0;
+            for (int i = 0; i < listeClients.size(); i++) {
+                if (listeClients.get(i).getRaisonSociale().equals(rs)) {
+                    listeClients.remove(i);
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce client n'existe pas !");
+            }
+        }
+    }
+    public static void modifierClientSociete(List<ClientSociete> listeClients){
+        if (listeClients.isEmpty()){
+            System.out.println("Vous n'avez pas de clients");
+        }
+        else {
+            Scanner scan3 = new Scanner(System.in);
+            System.out.println("donner la reference du client à modifier");
+            System.out.print(">>>");
+            int ref = scan3.nextInt();
+            scan3.nextLine();
+            if (!verifierClientSociete(listeClients, ref)){
+                System.out.println("ce client n'existe pas !");
+            }
+            else {
+                while (true){
+                    System.out.println("------>quelle paramètre vous voulez changer:");
+                    System.out.println("   la raison sociale: 1   le domaine d'activite: 2   finissez la modification: 3");
+                    System.out.print(">>>");
+                    int number = scan3.nextInt();
+                    scan3.nextLine();
+                    int test1 = 0;
+                    switch (number){
+                        case 1:
+                            listeClients.get(indexClientSociete(listeClients, ref)).setRaisonSociale(scan3.nextLine());
+                            scan3.nextLine();
+                            System.out.println("la raison sociale a été modifie");
+                            break;
+                        case 2:
+                            String da = scan3.nextLine();
+                            while (true){
+                                try{
+                                    da = scan3.nextLine();
+                                    scan3.nextLine();
+                                    break;
+                                }
+                                catch (Exception e){
+                                    System.out.println("error: " + e.getMessage());
+                                    System.out.print("veuillez entrer un domaine valide!\n>>>");
+                                    scan3.nextLine();
+                                }
+                            }
+                            listeClients.get(indexClientSociete(listeClients, ref)).setDomaineActivite(da);
+                            System.out.println("le domaine à été modifie");
+                            break;
 
+                        case 3:
+                            System.out.println("finissez la modification");
+                            test1 = 1;
+                            break;
+                        default:
+                            System.out.println("choisissez une option valide !");
+                            break;
+                    }
+                    if (test1 == 1){
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
