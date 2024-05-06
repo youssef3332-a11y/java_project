@@ -196,28 +196,85 @@ public class Main {
                  }
                  continue;
                 case 3 :
-                    System.out.println("1. Consulter la liste des fournisseurs");
-                    System.out.println("2. Ajouter un nouveau fournisseur");
-                    System.out.println("3. Supprimer un fournisseur");
-                    System.out.println("4. Mettre à jour les détails d'un fournisseur");
-                    int operationFournisseur = scan.nextInt();
-                    switch(operationFournisseur){
-                        case 1 :
-                            //yt9ra dakchi li kayn f lfichier li stockena fih les fournisseurs
-                            //break;
-                        case 2 :
-                            //bayn
-                            //break;
-                        case 3 :
-                            //code
-                            //break;
-                        case 4 :
-                            //code
-                            //break;
-                        default :
-                            System.out.println("Votre choix ne correspond à aucune opération");
+                    while (true){
+                        System.out.println("1. Consulter la liste des fournisseurs");
+                        System.out.println("2. Ajouter un nouveau fournisseur");
+                        System.out.println("3. Supprimer un fournisseur");
+                        System.out.println("4. Mettre à jour les détails d'un fournisseur");
+                        System.out.println("5. retourner à la page d'accueil");
+                        System.out.print(">>>");
+                        int operationFournisseur = scan.nextInt();
+                        Scanner scan2 = new Scanner(System.in);
+                        int choose;
+                        switch (operationFournisseur) {
+                            case 1:
+                                System.out.println("----->la liste des fournisseurs  particuliers: 1   societes: 2");
+                                choose = scan2.nextInt();
+                                scan2.nextLine();
+                                if (choose == 1) {
+                                    afficherListeFournisseurParticulier(ListeFournisseurParticulier);
+                                }
+                                else if (choose == 2) {
+                                    afficherListeClientSociete(ListeClientSociete);
+                                }
+                                else
+                                {
+                                    System.out.println("option non disponible !");
+                                }
+                                break;
+                            case 2:
+                                System.out.println("l'ajout d'un nouveau client personne: 1   societe: 2");
+                                choose = scan2.nextInt();
+                                scan2.nextLine();
+                                if (choose == 1) {
+                                    addlisteClientPersonne(ListeClientPersonne);
+                                }
+                                else if (choose == 2) {
+                                    addlisteClientSociete(ListeClientSociete);
+                                }
+                                else
+                                {
+                                    System.out.println("option non disponible !");
+                                }
+                                break;
+                            case 3:
+                                System.out.println("supprimer un client  personne: 1   societe: 2:");
+                                choose = scan2.nextInt();
+                                scan2.nextLine();
+                                if (choose == 1) {
+                                    supprimerClientPersonne(ListeClientPersonne);
+                                }
+                                else if (choose == 2) {
+                                    supprimerClientSociete(ListeClientSociete);
+                                }
+                                else
+                                {
+                                    System.out.println("option non disponible !");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("mettre à jour les détails d'un client personne: 1   societe: 2");
+                                choose = scan2.nextInt();
+                                scan2.nextLine();
+                                if (choose == 1) {
+                                    modifierClientPersonne(ListeClientPersonne);
+                                }
+                                else if (choose == 2) {
+                                    modifierClientSociete(ListeClientSociete);
+                                }
+                                else{
+                                    System.out.println("option non disponible !");
+                                }
+                                break;
+                            case 5:
+                                System.out.println("la page d'accueil :");
+                                break;
+                            default:
+                                System.out.println("Votre choix ne correspond à aucune opération");
+                        }
+                        if (operationClient == 5) {break;}
                     }
-                    break;
+                    continue;
                 case 4 :
                     System.out.println("1. Consulter la liste des commandes");
                     System.out.println("2. Ajouter une nouvelle commande");
@@ -619,7 +676,7 @@ public class Main {
             }
         }
     }
-//methodes pour manupiler les client personne
+//methodes pour manupiler les clients personne
     public static int indexClientPersonne(List<ClientPersonne> listeClients, int ref){
     for (int i = 0; i < listeClients.size(); i++) {
         if (listeClients.get(i).getReference() == ref) {
@@ -788,7 +845,7 @@ public class Main {
             }
         }
     }
-//methodes pour manupiler les client societe
+//methodes pour manupiler les clients societe
     public static int indexClientSociete(List<ClientSociete> listeClients, int ref){
     for (int i = 0; i < listeClients.size(); i++) {
         if (listeClients.get(i).getReference() == ref) {
@@ -912,6 +969,175 @@ public class Main {
                             break;
 
                         case 3:
+                            System.out.println("finissez la modification");
+                            test1 = 1;
+                            break;
+                        default:
+                            System.out.println("choisissez une option valide !");
+                            break;
+                    }
+                    if (test1 == 1){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    //methodes pour manipuler les fournisseurs particuliers
+    public static int indexFournisseurParticulier(List<FournisseurParticulier> listeFournisseurs, int ref){
+        for (int i = 0; i < listeFournisseurs.size(); i++) {
+            if (listeFournisseurs.get(i).getReference() == ref) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static boolean verifierFournisseurParticulier(List<FournisseurParticulier> listeFournisseurs, int ref){
+        return indexFournisseurParticulier(listeFournisseurs, ref) != -1;
+    }
+    public static void afficherListeFournisseurParticulier(List<FournisseurParticulier> listeFournisseurs){
+        if (listeFournisseurs.isEmpty()){
+            System.out.println("Pas de fournisseurs particuliers");
+        }
+        else {
+            for (FournisseurParticulier fournisseur : listeFournisseurs) {System.out.println(fournisseur);// calling the toString methode
+            }
+        }
+    }
+    public static void addlisteFournisseursParticulier(List<FournisseurParticulier> listeFournisseursParticulier){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("donner le nom du client");
+        System.out.print(">>>");
+        String nom;
+        while (true){
+            try{
+                nom = scan.next();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer un nom valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        System.out.println("donner le prenom du client:");
+        System.out.print(">>>");
+        String prenom;
+        while (true){
+            try {
+                prenom = scan.nextLine();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer un prenom valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        System.out.println("donner CIN:");
+        System.out.print(">>>");
+        String cin;
+        while (true){
+            try {
+                cin = scan.nextLine();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer une CIN valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        ClientPersonne client = new ClientPersonne(prenom, nom, cin);
+        listeClients.add(client);
+    }
+    public static void supprimerClientPersonne(List<ClientPersonne> listeClients) {
+        if (listeClients.isEmpty()) {
+            System.out.println("vous n'avait pas de clients personnes  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner la CIN du client:");
+            System.out.print(">>>");
+            String cin;
+            cin = scan2.nextLine();
+            int test = 0;
+            for (int i = 0; i < listeClients.size(); i++) {
+                if (listeClients.get(i).getCin().equals(cin)) {
+                    listeClients.remove(i);
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce client n'existe pas !");
+            }
+        }
+    }
+    public static void modifierClientPersonne(List<ClientPersonne> listeClients){
+        if (listeClients.isEmpty()){
+            System.out.println("Vous n'avez pas de clients");
+        }
+        else {
+            Scanner scan3 = new Scanner(System.in);
+            System.out.println("donner la reference du client à modifier");
+            System.out.print(">>>");
+            int ref = scan3.nextInt();
+            scan3.nextLine();
+            if (!verifierClientPersonne(listeClients, ref)){
+                System.out.println("ce client n'existe pas !");
+            }
+            else {
+                while (true){
+                    System.out.println("------>quelle paramètre vous voulez changer:");
+                    System.out.println("    le nom: 1   le prenom: 2   la cin: 3  finissez la modification: 4");
+                    System.out.print(">>>");
+                    int number = scan3.nextInt();
+                    scan3.nextLine();
+                    int test1 = 0;
+                    switch (number){
+                        case 1:
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setNom(scan3.nextLine());
+                            scan3.nextLine();
+                            System.out.println("le nom a été modifier");
+                            break;
+                        case 2:
+                            String prenom = scan3.nextLine();
+                            while (true){
+                                try{
+                                    prenom = scan3.nextLine();
+                                    scan3.nextLine();
+                                    break;
+                                }
+                                catch (Exception e){
+                                    System.out.println("error: " + e.getMessage());
+                                    System.out.print("veuillez entrer un prenom valide!\n>>>");
+                                    scan3.nextLine();
+                                }
+                            }
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setPrenom(prenom);
+                            System.out.println("le prenom à été modifier");
+                            break;
+                        case 3:
+                            String cin = scan3.nextLine();
+                            while (true){
+                                try{
+                                    cin = scan3.nextLine();
+                                    scan3.nextLine();
+                                    break;
+                                }
+                                catch (Exception e){
+                                    System.out.println("error: " + e.getMessage());
+                                    System.out.print("veuillez entrer une cin valide!\n>>>");
+                                    scan3.nextLine();
+                                }
+                            }
+                            listeClients.get(indexClientPersonne(listeClients, ref)).setCin(cin);
+                            System.out.println("la cin à été modifier");
+                            break;
+                        case 4:
                             System.out.println("finissez la modification");
                             test1 = 1;
                             break;

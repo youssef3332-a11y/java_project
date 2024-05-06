@@ -1,11 +1,16 @@
 public class FournisseurSociete extends Fournisseur{
-    private String raison_sociale;
+    private String raisonSociale;
 
-    public void setRaison_sociale(String raison_sociale) {
-        this.raison_sociale = raison_sociale;
+    public void setRaison_sociale(String raisonSociale) {
+        this.raisonSociale = raisonSociale;
     }
 
     public String getRaison_sociale() {
-        return raison_sociale;
+        return raisonSociale;
+    }
+    public FournisseurSociete(String raisonSociale){
+        super();
+        this.raisonSociale=raisonSociale;
+
     }
 }

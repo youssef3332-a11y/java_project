@@ -1,5 +1,5 @@
 public class ProduitFini extends Produit{
-    private int reference;
+    private static int reference;
     private static int count;
     public void setReference(int reference) {
         this.reference = reference;

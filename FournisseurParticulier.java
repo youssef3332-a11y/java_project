@@ -17,4 +17,17 @@ public class FournisseurParticulier extends Fournisseur{
     public String getPrenom() {
         return prenom;
     }
+    public FournisseurParticulier(String nom,String prenom){
+        super();
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"FournisseurParticulier{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                '}';
+    }
 }
