@@ -13,4 +13,8 @@ public class FournisseurSociete extends Fournisseur{
         this.raisonSociale=raisonSociale;
 
     }
+    @Override
+    public String toString() {
+        return super.toString() + ", raison sociale: " + raisonSociale;
+    }
 }

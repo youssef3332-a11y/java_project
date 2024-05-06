@@ -16,7 +16,7 @@ public class Fournisseur {
 
     @Override
     public String toString() {
-        return "Reference #" + reference;
+        return "Reference: " + reference;
     }
 }
 

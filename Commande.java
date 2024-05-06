@@ -23,7 +23,7 @@ public class Commande {
         this.produitsCommandes = produitsCommandes;
     }
 
-    //lier la commande au client
+    //lier la commande au fournisseur
     public String livrerCommande(Commande commande,Client client){
         //condition pour verifier si dateLivraison < today : doit livrer sinon print produit livré
         return "La commande numéro "+commande.numero+"a été livré au client : "+client.getReference();

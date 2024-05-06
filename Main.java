@@ -234,7 +234,7 @@ public class Main {
                                     addlisteFournisseursParticulier(ListeFournisseurParticulier);
                                 }
                                 else if (choose == 2) {
-                                    addlisteFournisseursParticulier(ListeFournisseurSociete);
+                                    addlisteFournisseursSociete(ListeFournisseurSociete);
                                 }
                                 else
                                 {
@@ -249,7 +249,7 @@ public class Main {
                                     supprimerFournisseurParticulier(ListeFournisseurParticulier);
                                 }
                                 else if (choose == 2) {
-                                    supprimerFournisseurSociete(ListeClientSociete);
+                                    supprimerFournisseurSociete(ListeFournisseurSociete);
                                 }
                                 else
                                 {
@@ -1122,6 +1122,92 @@ public class Main {
                         break;
                     }
                 }
+            }
+        }
+    }
+    //methodes pour fournisseurs societe
+    public static int indexFournisseurSociete(List<FournisseurSociete> listeFournisseurs, int ref){
+        for (int i = 0; i < listeFournisseurs.size(); i++) {
+            if (listeFournisseurs.get(i).getReference() == ref) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static boolean verifierFournisseurSociete(List<FournisseurSociete> listeFournisseurs, int ref){
+        return indexFournisseurSociete(listeFournisseurs, ref) != -1;
+    }
+    public static void afficherListeFournisseurSociete(List<FournisseurSociete> listeFournisseurs){
+        if (listeFournisseurs.isEmpty()){
+            System.out.println("Pas de fournisseurs societe");
+        }
+        else {
+            for (FournisseurSociete fournisseur : listeFournisseurs) {System.out.println(fournisseur);// calling the toString methode
+            }
+        }
+    }
+    public static void addlisteFournisseursSociete(List<FournisseurSociete> listeFournisseurs){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("donner la raison social");
+        System.out.print(">>>");
+        String rs;
+        while (true){
+            try{
+                rs = scan.next();
+                scan.nextLine();
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer une raison social valide!\n>>>");
+                scan.nextLine();
+            }
+        }
+        FournisseurSociete fournisseur = new FournisseurSociete(rs);
+        listeFournisseurs.add(fournisseur);
+    }
+    public static void supprimerFournisseurSociete(List<FournisseurSociete> listeFournisseurs) {
+        if (listeFournisseurs.isEmpty()) {
+            System.out.println("vous n'avait pas de fournisseurs  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner la ref du fournisseur:");
+            System.out.print(">>>");
+            int rsm;
+            rsm = scan2.nextInt();
+            int test = 0;
+            for (int i = 0; i < listeFournisseurs.size(); i++) {
+                if (listeFournisseurs.get(i).getReference() == rsm) {
+                    listeFournisseurs.remove(i);
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce fournisseur n'existe pas !");
+            }
+        }
+    }
+    public static void modifierFournisseurSociete(List<FournisseurSociete> listeFournisseurs){
+        if (listeFournisseurs.isEmpty()){
+            System.out.println("Vous n'avez pas de fournisseurs");
+        }
+        else {
+            Scanner scan3 = new Scanner(System.in);
+            System.out.println("donner la reference du client à modifier");
+            System.out.print(">>>");
+            int ref = scan3.nextInt();
+            scan3.nextLine();
+            if (!verifierFournisseurSociete(listeFournisseurs, ref)){
+                System.out.println("ce fournisseur n'existe pas !");
+            }
+            else {
+                System.out.println("------>donner la nouveau raison social:");
+                System.out.print(">>>");
+                String rss = scan3.nextLine();
+                listeFournisseurs.get(indexFournisseurSociete(listeFournisseurs, ref)).setRaison_sociale(scan3.nextLine());
+                scan3.nextLine();
+                System.out.println("le nom a été modifier");
             }
         }
     }
