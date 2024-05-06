@@ -4,7 +4,6 @@ public class ProduitFini extends Produit{
     public void setReference(int reference) {
         this.reference = reference;
     }
-
     public int getReference() {
         return reference;
     }
@@ -12,5 +11,10 @@ public class ProduitFini extends Produit{
     public ProduitFini(String nom, double prix, int quantite){
         super(nom,prix,quantite);
         reference++;
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + ", Reference: " + reference;
     }
 }

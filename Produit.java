@@ -3,11 +3,13 @@ public class Produit {
     private double prix_TTC;
     private int quantiteStock;
 
+    public void setLibelle(String libelle) {this.libelle = libelle;}
+    public String getLibelle() {return libelle;}
 
-    public void setPrix(double prix){
+    public void setPrix_TTC(double prix){
         this.prix_TTC=prix;
     }
-    public double getPrix(){
+    public double getPrix_TTC(){
         return prix_TTC;
     }
 
@@ -24,4 +26,8 @@ public class Produit {
         this.quantiteStock=quantite;
     }
 
+    @Override
+    public String toString(){
+        return "le nom: " + libelle + ", prix_TTC: " + prix_TTC + ", quantite en stock: " + quantiteStock;
+    }
 }
