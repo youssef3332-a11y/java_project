@@ -1,5 +1,5 @@
 public class Produit {
-    String libelle;
+    private String libelle;
     private double prix_TTC;
     private int quantiteStock;
 

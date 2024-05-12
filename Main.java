@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalTime;
 public class Main {
     public static void main(String[] args) {
         System.out.println("**************************************************");
@@ -25,6 +26,8 @@ public class Main {
         //les listes des fournisseurs
         List<FournisseurSociete> ListeFournisseurSociete = new ArrayList<>();
         List<FournisseurParticulier> ListeFournisseurParticulier = new ArrayList<>();
+        //listes des commandes
+        List<Commande> ListeCommande = new ArrayList<>();
 
         while (true) {
             System.out.println("Commencez par choisir l'un des menus :");
@@ -35,7 +38,17 @@ public class Main {
             System.out.println("5. finissez la gestion.");
             System.out.print(">>>");
             Scanner scan = new Scanner(System.in);
-            int menuChoix = scan.nextInt();
+            int menuChoix;
+            while (true) {
+                try{
+                menuChoix = scan.nextInt();
+                break;
+                }
+                catch (Exception e) {
+                    System.out.println("Veuillez choisir un choix valide");
+                    scan.nextLine();
+                }
+            }
             switch (menuChoix){
                 case 1 :
                     while (true) {
@@ -280,32 +293,43 @@ public class Main {
                     }
                     continue;
                 case 4 :
-                    System.out.println("1. Consulter la liste des commandes");
-                    System.out.println("2. Ajouter une nouvelle commande");
-                    System.out.println("3. Supprimer une commande");
-                    System.out.println("4. Mettre à jour les détails d'une commande");
-                    System.out.println("5. Envoyer une commande à un client");
-                    int operationCommande = scan.nextInt();
-                    switch(operationCommande){
-                        case 1 :
-                            //yt9ra dakchi li kayn f lfichier li stockena fih les commandes
-                            //break;
-                        case 2 :
-                            //bayn
-                            //break;
-                        case 3 :
-                            //code
-                            //break;
-                        case 4 :
-                            //code
-                            //break;
-                        case 5 :
-                            //kayna chi methode f class Commande
-                            //break;
-                        default :
-                            System.out.println("Votre choix ne correspond à aucune opération");
+                    while (true){
+                        System.out.println("1. Consulter la liste des commandes");
+                        System.out.println("2. Ajouter une nouvelle commande");
+                        System.out.println("3. Supprimer une commande");
+                        System.out.println("4. Envoyer une commande à un fournisseur");
+                        System.out.println("5. retourner à la page d'accueil");
+                        System.out.print(">>>");
+                        int operationCommande = scan.nextInt();
+                        scan.nextLine();
+                        switch(operationCommande){
+                            case 1 :
+                                System.out.println("la listes des commandes :");
+                                afficherListeCommandes(ListeCommande);
+                                break;
+                            case 2 :
+                                System.out.println("l'ajout d'une commande: ");
+                                List<Fournisseur> ListeFournisseur = new ArrayList<>(ListeFournisseurParticulier);
+                                ListeFournisseur.addAll(ListeFournisseurSociete);
+                                ajoutercommande(ListeCommande,ListeProduitElementaire,ListeFournisseur);
+                                break;
+                            case 3 :
+                                System.out.println("3. Suppression d'une commande");
+                                supprimerCommande(ListeCommande);
+                                break;
+                            case 4 :
+                                System.out.println("Envoyer une commande à un fournisseur: ");
+                                envoyercommade(ListeCommande);
+                                break;
+                            case 5 :
+                                System.out.println("la page d'accueil :");
+                                break;
+                            default :
+                                System.out.println("Votre choix ne correspond à aucune opération");
+                        }
+                        if (operationCommande == 5) {break;}
                     }
-                    break;
+                    continue;
                 case 5:
                     System.out.println("l'application est fermée.");
                     System.exit(0);
@@ -317,7 +341,7 @@ public class Main {
 //methodes pour les produits elementaire
     public static int indexProduitElementaire(List<ProduitElementaire> listeProduits, String nom){
         for (int i = 0; i < listeProduits.size(); i++) {
-            if (listeProduits.get(i).libelle.equals(nom)) {
+            if (listeProduits.get(i).getLibelle().equals(nom)) {
                 return i;
             }
         }
@@ -414,7 +438,7 @@ public class Main {
             nom = scan2.nextLine();
             int test = 0;
             for (int i = 0; i < listeProduits.size(); i++) {
-                if (listeProduits.get(i).libelle.equals(nom)) {
+                if (listeProduits.get(i).getLibelle().equals(nom)) {
                     listeProduits.remove(i);
                     test = 1;
                     break;
@@ -448,7 +472,7 @@ public class Main {
                     int test1 = 0;
                     switch (number){
                         case 1:
-                            listeProduits.get(indexProduitElementaire(listeProduits, nom)).libelle = scan3.nextLine();
+                            listeProduits.get(indexProduitElementaire(listeProduits, nom)).setLibelle(scan3.nextLine());
                             scan3.nextLine();
                             System.out.println("le nom a été modifier");
                             break;
@@ -510,7 +534,7 @@ public class Main {
 //methodes pour les produits fini
     public static int indexProduitFini(List<ProduitFini> listeProduits, String nom){
         for (int i = 0; i < listeProduits.size(); i++) {
-            if (listeProduits.get(i).libelle.equals(nom)) {
+            if (listeProduits.get(i).getLibelle().equals(nom)) {
                 return i;
             }
         }
@@ -593,7 +617,7 @@ public class Main {
             nom = scan2.nextLine();
             int test = 0;
             for (int i = 0; i < listeProduits.size(); i++) {
-                if (listeProduits.get(i).libelle.equals(nom)) {
+                if (listeProduits.get(i).getLibelle().equals(nom)) {
                     listeProduits.remove(i);
                     test = 1;
                     break;
@@ -627,7 +651,7 @@ public class Main {
                     int test1 = 0;
                     switch (number){
                         case 1:
-                            listeProduits.get(indexProduitFini(listeProduits, nom)).libelle = scan3.nextLine();
+                            listeProduits.get(indexProduitFini(listeProduits, nom)).setLibelle(scan3.nextLine());
                             scan3.nextLine();
                             System.out.println("le nom a été modifier");
                             break;
@@ -649,10 +673,10 @@ public class Main {
                             System.out.println("le prix à été modifier");
                             break;
                         case 3:
-                            int quantitee;
+                            int quantite;
                             while (true){
                                 try{
-                                    quantitee = scan3.nextInt();
+                                    quantite = scan3.nextInt();
                                     scan3.nextLine();
                                     break;
                                 }
@@ -662,8 +686,8 @@ public class Main {
                                     scan3.nextLine();
                                 }
                             }
-                            listeProduits.get(indexProduitFini(listeProduits, nom)).setQuantite(quantitee);
-                            System.out.println("la quantitee à été modifier");
+                            listeProduits.get(indexProduitFini(listeProduits, nom)).setQuantite(quantite);
+                            System.out.println("la quantite à été modifier");
                             break;
                         case 4:
                             System.out.println("finissez la modification");
@@ -988,6 +1012,16 @@ public class Main {
         }
     }
     //methodes pour manipuler les fournisseurs particuliers
+    ///////pour les fournisseurs
+    public static int indexFournisseur(List<Fournisseur> listeFournisseurs, int ref){
+        for (int i = 0; i < listeFournisseurs.size(); i++) {
+            if (listeFournisseurs.get(i).getReference() == ref) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    //////
     public static int indexFournisseurParticulier(List<FournisseurParticulier> listeFournisseurs, int ref){
         for (int i = 0; i < listeFournisseurs.size(); i++) {
             if (listeFournisseurs.get(i).getReference() == ref) {
@@ -1208,6 +1242,109 @@ public class Main {
                 listeFournisseurs.get(indexFournisseurSociete(listeFournisseurs, ref)).setRaison_sociale(scan3.nextLine());
                 scan3.nextLine();
                 System.out.println("le nom a été modifier");
+            }
+        }
+    }
+    //methodes pour les commandes
+    public static void afficherListeCommandes(List<Commande> listeCommande){
+        if (listeCommande.isEmpty()){
+            System.out.println("Vous n'avez pas de commandes");
+        }
+        else {
+            for (Commande commande : listeCommande) {System.out.print(commande);// calling the toString methode
+            }
+        }
+    }
+    public static void ajoutercommande(List<Commande> listeCommande, List<ProduitElementaire> listproduit, List<Fournisseur> ListFournisseur){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("donner la reference du fournisseur:");
+        System.out.print(">>>");
+        int ref;
+        Commande commande;
+        while (true){
+            try{
+                ref = scan.nextInt();
+                scan.nextLine();
+                commande = new Commande(ListFournisseur.get(indexFournisseur(ListFournisseur, ref)));
+                break;
+            }
+            catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+                System.out.print("veuillez entrer une reference valide!\n>>>");
+            }
+        }
+        while (true){
+            System.out.println("choisir l'un des produit a ajouter a la commande: ");
+            if(listproduit.isEmpty()){
+                System.out.println("Vous n'avez pas de produit");
+                System.out.print(">>>");
+                break;
+            }
+            else {
+                for (ProduitElementaire produit : listproduit) {
+                    System.out.print("       " + produit.getLibelle());
+                    System.out.println();
+                }
+                System.out.println("<< pour finir l'ajout: 1 >>");
+                Scanner scan2 = new Scanner(System.in);
+                String choose = scan2.next();
+                scan2.nextLine();
+                if (choose.equals("1")){
+                    commande.prixsum();
+                    listeCommande.add(commande);
+                    break;
+                }
+                else if (!verifierProduitElementaire(listproduit, choose)){
+                        System.out.println("ce produit n'existe pas !");
+                }
+                else{
+                        commande.addproduit(listproduit.get(indexProduitElementaire(listproduit, choose)));
+                }
+            }
+        }
+    }
+    public static void supprimerCommande(List<Commande> listecommande) {
+        if (listecommande.isEmpty()) {
+            System.out.println("vous n'avez pas de commandes  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner le numero de la commande :");
+            System.out.print(">>>");
+            int ref;
+            ref = scan2.nextInt();
+            int test = 0;
+            for (int i = 0; i < listecommande.size(); i++) {
+                if (listecommande.get(i).getNumero()==ref) {
+                    listecommande.remove(i);
+                    System.out.println("la commande a ete supprimee!");
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce numero n'existe pas !");
+            }
+        }
+    }
+    public static void envoyercommade(List<Commande> listecommande){
+        if (listecommande.isEmpty()) {
+            System.out.println("vous n'avez pas de commandes  !");
+        } else{
+            Scanner scan2 = new Scanner(System.in);
+            System.out.println("donner le numero de la commande :");
+            System.out.print(">>>");
+            int ref;
+            ref = scan2.nextInt();
+            int test = 0;
+            for (int i = 0; i < listecommande.size(); i++) {
+                if (listecommande.get(i).getNumero()==ref) {
+                    listecommande.get(i).livrerCommande();
+                    test = 1;
+                    break;
+                }
+            }
+            if (test == 0) {
+                System.out.println("ce numero n'existe pas !");
             }
         }
     }
