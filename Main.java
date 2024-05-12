@@ -1228,7 +1228,7 @@ public class Main {
         }
         else {
             Scanner scan3 = new Scanner(System.in);
-            System.out.println("donner la reference du client à modifier");
+            System.out.println("donner la reference du fournisseur à modifier");
             System.out.print(">>>");
             int ref = scan3.nextInt();
             scan3.nextLine();
@@ -1269,6 +1269,7 @@ public class Main {
                 break;
             }
             catch (Exception e){
+                scan.nextLine();
                 System.out.println("error: " + e.getMessage());
                 System.out.print("veuillez entrer une reference valide!\n>>>");
             }
